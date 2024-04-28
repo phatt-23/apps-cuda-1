@@ -12,7 +12,11 @@ struct CudaImg {
         uchar3 *p_uchar3;   // data of picture
         uchar4 *p_uchar4;   // data of picture
     };
-    // CudaImg(cv::Mat& img);  // 
+    CudaImg(cv::Mat& img);  // constructor
+
+    __device__ uchar3& at3(int x, int y) {
+        return this->p_uchar3[y * this->size.x + x];
+    }
 };
 
 #endif//__CUDA_IMAGE_H
