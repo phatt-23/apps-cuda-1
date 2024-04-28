@@ -14,7 +14,7 @@ void cuda_transpone(CudaImg og, CudaImg rot) {
 }
 
 __host__
-void cu_sq_rotate(CudaImg og, CudaImg rot, int direction) {
+void cu_sq_rotate(CudaImg og, CudaImg rot, cu_fn::Direction option) {
     // int id = cudaGetDevice(&id);
     
     dim3 bd;
@@ -41,15 +41,17 @@ void cu_sq_rotate(CudaImg og, CudaImg rot, int direction) {
 
     // cudaMemPrefetchAsync(og.p_void, og.size.x * og.size.x * sizeof(uchar4), id);
 
-    if(direction == -1) {
-        cuda_transpone<<< gd, bd >>>(og, rot);
-        cu_mirror(rot, cu_fn::vertical);
-    }
-
-    if(direction == 1) {
-        cuda_transpone<<< gd, bd >>>(og, rot);
-        cu_mirror(rot, cu_fn::horizontal);
-    }
+    switch (option) {
+        case cu_fn::to_left:
+            cuda_transpone<<< gd, bd >>>(og, rot);
+            cu_mirror(rot, cu_fn::vertical);
+            break;
+        case cu_fn::to_right:
+            cuda_transpone<<< gd, bd >>>(og, rot);
+            cu_mirror(rot, cu_fn::horizontal);
+            break;
+        default: break;
+    };
 
     cudaDeviceSynchronize();
 }

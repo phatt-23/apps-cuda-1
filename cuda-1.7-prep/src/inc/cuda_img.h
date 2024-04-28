@@ -15,15 +15,9 @@ struct CudaImg {
     CudaImg(cv::Mat& img);  // constructor
 
     // coordinate getters
-    __device__ uchar1& at1(int x, int y) {
-        return this->p_uchar1[y * this->size.x + x];
-    }
-    __device__ uchar3& at3(int x, int y) {
-        return this->p_uchar3[y * this->size.x + x];
-    }
-    __device__ uchar4& at4(int x, int y) {
-        return this->p_uchar4[y * this->size.x + x];
-    }
+    __device__ uchar1& at1(int x, int y) { return p_uchar1[y * size.x + x]; }
+    __device__ uchar3& at3(int x, int y) { return p_uchar3[y * size.x + x]; }
+    __device__ uchar4& at4(int x, int y) { return p_uchar4[y * size.x + x]; }
 };
 
 #endif//__CUDA_IMAGE_H
