@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        "array": "cpp",
+        "sstream": "cpp",
+        "tuple": "cpp"
+    }
+}
